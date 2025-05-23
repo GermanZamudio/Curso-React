@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "axion": "^0.1.0",
+    "axios": "^1.9.0",
+    "react-router-dom": "^7.6.0",
+    "tailwindcss": "^4.1.7",
+    "twin.macro": "^3.4.1"
+  }
+}
