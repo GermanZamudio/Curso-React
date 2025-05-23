@@ -48,7 +48,7 @@ const ProductCategory = styled.span`
 function Detalle() {
   const { id } = useParams();
 
-  // Ahora usamos el ID en la URL para traer UN producto
+  //Me base en algunos videos, que mostraban de hacer un archivo js para el llamado a las APIS. Es como una funcion global. Me parecio algo copado.
   const { data: product, loading, error } = useFetch(
     `https://fakestoreapi.com/products/${id}`
   );

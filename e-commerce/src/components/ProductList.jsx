@@ -5,8 +5,6 @@ import styled from "styled-components";
 import { Link } from 'react-router-dom';
 
 
-// Estilos
-
 const Container = styled.div`
   height: 100%;
   margin-bottom: 10%;
@@ -62,7 +60,6 @@ const PriceContainer = styled.div`
   }
 `;
 
-// Componente principal
 function ProductList() {
   const { carrito, addProduct } = useContext(CarritoContext);
 

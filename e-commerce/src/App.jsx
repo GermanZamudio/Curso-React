@@ -9,7 +9,8 @@ import RequestAuth from './components/RequestAuth';
 import './App.css';
 
 function App() {
-  
+  {/*Tuve que setear el localStorage en false, por que de manera predeterminada me venia en "True", 
+    entonces me permitia ingresar a la ruta "Producto", y no simulaba correctamente el login*/}
   useEffect(() => {
     localStorage.removeItem('token'); 
     setIsAuthenticated(false); 
@@ -27,6 +28,8 @@ function App() {
         <Routes>
           <Route path='/' element={<Home/>}></Route>
           <Route path='/Login' element={<Login setIsAuthenticated={setIsAuthenticated}/>}></Route>
+          {/*Ruta resguardada, el carrito no tiene ruta, ya que es un modal. 
+          Igualmente solo te permite ver desde la ruta "Producto", lo configure asi en el Navbar*/}
           <Route path='/Producto' element=
             {<RequestAuth isAuthenticated={isAuthenticated}>
               <Product/>

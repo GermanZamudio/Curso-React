@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer.jsx'; 
 import styled from "styled-components";
 
-// Estilos
+// Estilos, use styled-components. Ya lo habia usado en algunos proyectos personales.
 const Container=styled.div`
     height: 100%;
     margin-bottom: 10%;

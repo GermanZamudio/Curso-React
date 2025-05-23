@@ -1,6 +1,7 @@
 import React from 'react';
+{/* Esto lo saque de Chatgpt, por que no sabia como hacerlo. Igualmente lo entendi, no es dificil  */}
 import { useNavigate } from 'react-router-dom';
-import { FaSignInAlt } from 'react-icons/fa'; // FontAwesome
+import { FaSignInAlt } from 'react-icons/fa'; 
 
 function Login({ setIsAuthenticated }) {
   const navigate = useNavigate();
@@ -8,7 +9,7 @@ function Login({ setIsAuthenticated }) {
   const handleLogin = () => {
     localStorage.setItem('token', 'fake_token');
     setIsAuthenticated(true);
-    navigate('/'); // redirigir al home después del login
+    navigate('/'); 
   };
 
   return (

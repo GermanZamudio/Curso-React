@@ -16,12 +16,12 @@ function addProduct (product){
         setCarrito((prevCarrito)=>{
             const exist=prevCarrito.find(item=>item.id===product.id);
             if(exist){
-                //Si existe el producto dentro del carrito, aumenta su cantidad
+                //Si existe el producto sumamos 1
                 return prevCarrito.map(item=>
                     item.id=== product.id ? {...item, quantity:item.quantity +1}:item
                 );
             }else{
-                //Si no existe, lo agrega con cantidad 1
+                //Si no existe lo agregamos
                 return[...prevCarrito, {...product,quantity:1}];
             }
         });
@@ -36,17 +36,17 @@ function addCant(id){
 function restarCant(id){
     setCarrito((prevCarrito) =>
       prevCarrito.map(item=>{
-        //Si la cantidad es 1, mas abajo lo eliminaremos
+        //Si la cantidad es 1 lo elimino
         if (item.id=== id){
           if(item.quantity===1){
               return null
           }else{
-            // Si hay más de 1, restamos normalmente
+            // Si hay 1 o mas le resto
             return { ...item, quantity: item.quantity - 1 };}
         
-        } return item; // Devolvemos el resto tal cual
+        } return item; 
         })
-        .filter((item)=>item!==null)//Aca sacamos de la lista a los que tienen cantidad nula  
+        .filter((item)=>item!==null)//Aca saco a los que no tienen stock  
 )
 }
 

@@ -5,6 +5,8 @@ export function useFetch(url) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+
+  //El manejo de errores lo estudie en un video. Y lo agregue casi tal cual al mismo.
   useEffect(() => {
     const abortController = new AbortController();
     setLoading(true);
