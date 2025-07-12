@@ -1,9 +1,9 @@
 import { useParams } from "react-router-dom";
-import React from 'react';
+import React from "react";
 import { useFetch } from "../useFetch";
 import styled from "styled-components";
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer.jsx';
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer.jsx";
 
 const DetalleProduct = styled.div`
   display: flex;
@@ -12,7 +12,7 @@ const DetalleProduct = styled.div`
   padding: 40px;
   flex-direction: column;
   text-align: center;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 `;
 
 const ProductImage = styled.img`
@@ -46,18 +46,21 @@ const ProductCategory = styled.span`
 `;
 
 function Detalle() {
-  const { id } = useParams();
+  const { id, source } = useParams();
 
-  //Me base en algunos videos, que mostraban de hacer un archivo js para el llamado a las APIS. Es como una funcion global. Me parecio algo copado.
-  const { data: product, loading, error } = useFetch(
-    `https://fakestoreapi.com/products/${id}`
-  );
+  // Construir URL según el source
+  const url =
+    source === "mock"
+      ? `https://686fde294838f58d11233057.mockapi.io/api/products/${id}`
+      : `https://fakestoreapi.com/products/${id}`;
+
+  const { data: product, loading, error } = useFetch(url);
 
   return (
     <div>
       <Navbar />
-      {error && <p style={{ color: 'red' }}>{String(error)}</p>}
-      {loading && <p style={{ fontSize: '20px' }}>Cargando...</p>}
+      {error && <p style={{ color: "red" }}>{String(error)}</p>}
+      {loading && <p style={{ fontSize: "20px" }}>Cargando...</p>}
 
       {!loading && product && (
         <DetalleProduct>
@@ -68,7 +71,7 @@ function Detalle() {
           <ProductCategory>Categoría: {product.category}</ProductCategory>
         </DetalleProduct>
       )}
-    <Footer/>
+      <Footer />
     </div>
   );
 }

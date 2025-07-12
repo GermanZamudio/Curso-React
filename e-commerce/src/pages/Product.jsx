@@ -14,7 +14,6 @@ function Product() {
     <div>
       <Navbar openCarr={openModal} />
       <ListProduct />
-      
       {showModal && <CarritoModal onClose={closeModal} />}
       <Footer/>
     </div>

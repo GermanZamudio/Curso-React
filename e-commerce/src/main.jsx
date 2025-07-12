@@ -9,7 +9,6 @@ import GlobalStyle from './GlobalStyle';
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Router>
-      
       <GlobalStyle />
       <CarritoProvider>
         <App />
