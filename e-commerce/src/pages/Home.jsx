@@ -4,21 +4,61 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer.jsx'; 
 import styled from "styled-components";
 
-// Contenedor general con margen inferior y altura completa
 const Container = styled.div`
-  height: 100%;
+  min-height: calc(100vh - 100px);
   margin-bottom: 10%;
+  height: 100%;
 `;
 
-// Contenedor para centrar el slider
+const ContentWrapper = styled.div`
+  width: 100%;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  
+  @media (max-width: 900px) {
+    margin-top: 15%;
+  }
+`;
+const Title = styled.h1`
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  font-weight: 400;
+  color: #1a1a1a;
+  text-align: center;
+  text-transform: none;
+  letter-spacing: 0.05em;
+  margin: 2.5rem 0 2rem 0;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 0.4rem;
+
+  &::after {
+    content: '';
+    display: block;
+    width: 60%;
+    height: 3px;
+    background: linear-gradient(90deg, #1979d8, #56ccf2);
+    border-radius: 2px;
+    margin: 0.6rem auto 0;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+    margin: 2rem 0 1.5rem 0;
+  }
+`;
+
 const CardsContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 2%;
+  margin-top: 5%;
+  @media (max-width: 900px) {
+    height: 300px;
+  }
 `;
 
-// Fondo del producto con sombra y bordes redondeados
 const ProductBack = styled.article`
   margin: 10px;
   padding: 10px;
@@ -48,7 +88,6 @@ const ProductBack = styled.article`
   }
 `;
 
-// Imagen con borde redondeado y objeto cubriendo el área
 const ProductImage = styled.img`
   width: 1300px;
   border-radius: 30px;
@@ -88,20 +127,22 @@ function Home() {
   return (
     <div>
       <Navbar />
-      
       <Container>
-        <CardsContainer>
-          {error && <p style={{ color: 'red' }}>{String(error)}</p>}
-          {loading && <p style={{ fontSize: '20px' }}>Cargando...</p>}
-          {!loading && !error && productos.length > 0 && (
-            <ProductBack>
-              <ProductImage
-                src={productos[indiceActual].urls.regular}
-                alt={productos[indiceActual].alt_description || "Imagen de moda"}
-              />
-            </ProductBack>
-          )}
-        </CardsContainer>
+        <ContentWrapper>
+          <Title>Moda Trend</Title>
+          <CardsContainer>
+            {error && <p style={{ color: 'red' }}>{String(error)}</p>}
+            {loading && <p style={{ fontSize: '20px' }}>Cargando...</p>}
+            {!loading && !error && productos.length > 0 && (
+              <ProductBack>
+                <ProductImage
+                  src={productos[indiceActual].urls.regular}
+                  alt={productos[indiceActual].alt_description || "Imagen de moda"}
+                />
+              </ProductBack>
+            )}
+          </CardsContainer>
+        </ContentWrapper>
       </Container>  
       <Footer/>
     </div>

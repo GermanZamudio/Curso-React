@@ -1,16 +1,13 @@
 import React, { useContext, useState } from 'react';
 import { CarritoContext } from "../../context/CarritoContext";
 import styled from 'styled-components';
-import { IoClose } from 'react-icons/io5'; 
-import { MdDelete } from 'react-icons/md'; 
-import basura from '../../assets/basura.png';
+import { IoClose } from 'react-icons/io5';
+import { MdDelete } from 'react-icons/md';
 import CompraNotificacion from '../CardCompra';
-
 
 const ModalContainer = styled.div`
   font-family: 'Inter', sans-serif; 
   position: fixed;
-  box-sizing: border-box;
   top: 0;
   right: 0;
   height: 100vh;
@@ -18,9 +15,8 @@ const ModalContainer = styled.div`
   max-width: 400px;
   background-color: white;
   padding: 30px;
-  border-radius: 0;
   overflow: hidden;
-  z-index: 1000;
+  z-index: 1100;
   box-shadow: -4px 0 6px rgba(0, 0, 0, 0.1);
   animation: ${props => props.isClosing ? 'slideOut 0.4s ease forwards' : 'slideIn 0.4s ease-out forwards'};
 
@@ -33,8 +29,11 @@ const ModalContainer = styled.div`
     from { opacity: 1; transform: translateY(0); }
     to { opacity: 0; transform: translateY(-20px); }
   }
+
   @media (max-width: 800px) {
-    width: 40%;
+    width: 80%;
+    max-width: 400px;
+    padding: 20px;
   }
 `;
 
@@ -45,7 +44,7 @@ const Overlay = styled.div`
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.4);
-  z-index: 999;
+  z-index: 1099;
   opacity: ${props => props.isClosing ? 0 : 1};
   transition: opacity 0.4s ease;
 `;
@@ -55,8 +54,6 @@ const ContenidoModal = styled.div`
   flex-direction: column;
   height: 100%;
   width: 100%;
-  margin: 0;
-  padding: 0;
 `;
 
 const Header = styled.div`
@@ -161,26 +158,29 @@ const Item = styled.div`
 `;
 
 const Footer = styled.div`
-    height: 30%;
-    width: 100%;
-    display: flex;
-    align-items: end;
-    justify-content: start;
-    flex-direction: column;
-    border-top: 1px solid #ddd;
-    font-weight: bold;
-  .botonesCompra{
+  height: 30%;
+  width: 100%;
+  display: flex;
+  align-items: end;
+  justify-content: start;
+  flex-direction: column;
+  border-top: 1px solid #ddd;
+  font-weight: bold;
+
+  .botonesCompra {
     display: flex;
     width: 100%;
     max-width: 300px;
     justify-content: space-around;
   }
-  button{
+
+  button {
     padding: 10px;
     font-size: 16px;
     border-radius: 7px;
     cursor: pointer;
   }
+
   .Vaciar {
     color: #f54d4d;
     border: solid 1px #f54d4d;
@@ -192,6 +192,7 @@ const Footer = styled.div`
       color: white;
     }
   }
+
   .Comprar {
     color: #fff;
     background-color: #1979d8;
@@ -199,23 +200,25 @@ const Footer = styled.div`
     transition: background-color 0.3s ease;
 
     &:hover {
-      background-color: #125195;}
-}
+      background-color: #125195;
+    }
+  }
 `;
+
 function Carrito({ onClose }) {
   const { carrito, Compra, VaciarProduct, addCant, restarCant, removeProduct } = useContext(CarritoContext);
 
   const [showNotification, setShowNotification] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
 
-  const total = carrito.reduce((acc, item) => acc + item.price * item.quantity, 0);
+  const total = carrito.reduce((acc, item) => acc + parseFloat(item.price || 0) * item.quantity, 0);
 
   const handleCompra = () => {
     Compra();
     setShowNotification(true);
     setTimeout(() => {
       setShowNotification(false);
-      handleClose(); 
+      handleClose();
     }, 1500);
   };
 
@@ -223,7 +226,6 @@ function Carrito({ onClose }) {
     setIsClosing(true);
   };
 
-  
   const handleEnd = () => {
     if (isClosing) {
       onClose();
@@ -242,10 +244,10 @@ function Carrito({ onClose }) {
 
           <ContenidoLista>
             {carrito.map(item => (
-              <Item key={item.id}>
+              <Item key={`${item.source}-${item.id}`}>
                 <h4>{item.title}</h4>
                 <div className="containercontrols">
-                  <div className="price"><strong>Precio:</strong> ${item.price.toFixed(2)}</div>
+                  <div className="price"><strong>Precio:</strong> ${parseFloat(item.price || 0).toFixed(2)}</div>
                   <div className="controls">
                     <div className="cant">
                       <span><strong>Cantidad:</strong> {item.quantity}</span>

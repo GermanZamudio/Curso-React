@@ -12,20 +12,19 @@ useEffect(()=>{
             localStorage.setItem('carrito',JSON.stringify(carrito));
         },[carrito])
     
-function addProduct (product){
-        setCarrito((prevCarrito)=>{
-            const exist=prevCarrito.find(item=>item.id===product.id);
-            if(exist){
-                //Si existe el producto sumamos 1
-                return prevCarrito.map(item=>
-                    item.id=== product.id ? {...item, quantity:item.quantity +1}:item
-                );
-            }else{
-                //Si no existe lo agregamos
-                return[...prevCarrito, {...product,quantity:1}];
-            }
-        });
-    }
+function addProduct(product){
+    setCarrito((prevCarrito) => {
+      const exist = prevCarrito.find(item => item.id === product.id);
+      const priceNum = Number(product.price);
+      if (exist) {
+        return prevCarrito.map(item =>
+          item.id === product.id ? {...item, quantity: item.quantity + 1} : item
+        );
+      } else {
+        return [...prevCarrito, {...product, quantity: 1, price: isNaN(priceNum) ? 0 : priceNum}];
+      }
+    });
+  }
 
 function addCant(id){
     setCarrito((prevCarrito) =>

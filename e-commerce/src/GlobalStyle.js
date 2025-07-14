@@ -22,6 +22,9 @@ const GlobalStyle = createGlobalStyle`
   button {
     font-family: inherit;
   }
+  .modal {
+  z-index: 1200 !important;
+}
 `;
 
 export default GlobalStyle;

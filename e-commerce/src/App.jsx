@@ -5,8 +5,10 @@ import Product from './pages/Product';
 import Admin from './pages/Admin';
 import Detalle from './pages/Detalle';
 import Login from './pages/Login';
+import Singup from './pages/Singup';
 import Nosotros from "./pages/Nosotros";
 import RequestAuth from './components/RequestAuth';
+import AdminAuth from './components/AdminAuth';
 
 import './App.css';
 
@@ -28,7 +30,8 @@ function App() {
   return (
       <div>
         <Routes>
-          <Route path='/' element={<Home/>}></Route>
+          <Route path='/' element={<Home/>}></Route>          
+          <Route path='/Singup' element={<Singup setIsAuthenticated={setIsAuthenticated}/>}></Route>
           <Route path='/Login' element={<Login setIsAuthenticated={setIsAuthenticated}/>}></Route>
           {/*Ruta resguardada, el carrito no tiene ruta, ya que es un modal. 
           Igualmente solo te permite ver desde la ruta "Producto", lo configure asi en el Navbar*/}
@@ -37,7 +40,12 @@ function App() {
               <Product/>
             </RequestAuth>}>
           </Route>          
-        <Route path='/Admin' element={<Admin/>}></Route>
+          {/* Solo puede ingresar el usuario con id=1. Es decir, el primero el loguearse */}
+          <Route path='/Admin' element={
+            <AdminAuth>
+              <Admin/>
+            </AdminAuth>
+          }></Route>
         <Route path="/Detalle/:source/:id" element={<Detalle />} />
         <Route path="/nosotros" element={<Nosotros />} />
         </Routes>

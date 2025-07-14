@@ -7,7 +7,7 @@ function Nosotros() {
     <div>
       <Navbar />
       <div className="container mt-5 mb-5">
-        {/* SECCIÓN NOSOTROS */}
+        
         <div className="row mb-5 align-items-center">
           <div className="col-md-6">
             <h1 className="mb-4">Quiénes Somos</h1>
@@ -22,14 +22,13 @@ function Nosotros() {
           </div>
         <div className="col-md-6">
         <img
-            src="https://images.unsplash.com/photo-1556909190-447fc0f025a5?auto=format&fit=crop&w=800&q=80"
+            src="https://www.adobe.com/es/creativecloud/illustration/discover/media_14459bccf4da17aebcc293812e85ea06b8e24fee3.png?width=2000&format=webply&optimize=medium"
             alt="Moda y ropa"
             className="img-fluid rounded shadow"
         />
         </div>
         </div>
 
-        {/* SECCIÓN CONTACTO */}
         <div className="row">
           <div className="col-md-12">
             <h2 className="mb-4">Contacto</h2>

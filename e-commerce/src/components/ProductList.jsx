@@ -5,81 +5,79 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 const Container = styled.div`
-  height: 100%;
-  margin-bottom: 10%;
+  width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  padding: 2rem 1rem;
 `;
 
 const CardsContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  width: 90%;
-  gap: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  width: 100%;
+  max-width: 1400px;
 
   @media (max-width: 768px) {
-    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
-    gap: 0.75rem;
+    gap: 1rem;
   }
 `;
 
 const ProductCard = styled.article`
   border: 1px solid #ccc;
-  padding: 10px;
-  width: 400px;
-  height: 400px;
+  padding: 15px;
+  height: 450px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   background: #fff;
   transition: box-shadow 0.3s ease;
 
   &:hover {
-    box-shadow: 0 4px 12px rgb(0 0 0 / 0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   }
 
   @media (max-width: 768px) {
-    width: 90vw;
     height: auto;
   }
 `;
 
 const ProductImage = styled.img`
   width: 100%;
-  height: 65%;
+  height: 200px;
   object-fit: contain;
   border-radius: 6px;
+  margin-bottom: 1rem;
 `;
 
 const Title = styled.p`
-  font-size: 15px;
+  font-size: 1rem;
   font-weight: bold;
-  margin: 0.5rem 0;
   flex-grow: 1;
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const PriceContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 0 0 0;
 
   p {
-    margin: 0;
     font-size: 1rem;
     font-weight: 600;
+    margin: 0;
   }
 
   button {
-    width: 30%;
-    height: 40px;
-    font-size: 16px;
+    padding: 8px 14px;
+    font-size: 0.9rem;
     border-radius: 7px;
     cursor: pointer;
     color: #fff;
@@ -92,7 +90,6 @@ const PriceContainer = styled.div`
     }
 
     @media (max-width: 768px) {
-      width: 40%;
       font-size: 14px;
       height: 36px;
     }
@@ -112,11 +109,9 @@ function ProductList() {
     error: errorMock,
   } = useFetch("https://686fde294838f58d11233057.mockapi.io/api/products");
 
-  // Asegurar arrays válidos
   const productosSafe = Array.isArray(productos) ? productos : [];
   const productosMockSafe = Array.isArray(productosMock) ? productosMock : [];
 
-  // Agregar campo "source" para diferenciar el origen
   const productosFormateados = productosSafe.map((p) => ({
     ...p,
     source: "public",
@@ -146,7 +141,10 @@ function ProductList() {
           !errorMock &&
           allProducts.map((product) => (
             <ProductCard key={`${product.source}-${product.id}`}>
-              <Link to={`/Detalle/${product.source}/${product.id}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+              <Link
+                to={`/Detalle/${product.source}/${product.id}`}
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
                 <ProductImage src={product.image} alt={product.title} />
                 <Title>{product.title}</Title>
               </Link>

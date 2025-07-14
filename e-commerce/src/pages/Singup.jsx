@@ -1,46 +1,50 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FaSignInAlt } from 'react-icons/fa';
 
-export default function Login({ setIsAuthenticated }) {
+export default function Signup() {
   const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleLogin = async (e) => {
+  const API_URL = 'https://686fde294838f58d11233057.mockapi.io/api/users';
+
+  const handleSignup = async (e) => {
     e.preventDefault();
+    setError(""); 
 
     try {
-      const res = await fetch(`https://686fde294838f58d11233057.mockapi.io/api/users?username=${username}`);
+      const res = await fetch(`${API_URL}?username=${username}`);
       const users = await res.json();
 
-      const user = users.find((u) => u.password === password);
+      const usuarioNoExiste = users === 'Not found' || (Array.isArray(users) && users.length === 0);
 
-      if (user) {
-        localStorage.setItem('token', user.id); 
-        
-        // Guardar si es admin (id === "1")  y colocarle isAdmin en localStorage
-        if (user.id === "1") {
-          localStorage.setItem('isAdmin', 'true');
+      if (usuarioNoExiste) {
+        const response = await fetch(API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password }),
+        });
+
+        if (response.ok) {
+          navigate('/login');
         } else {
-          localStorage.removeItem('isAdmin');
+          setError('Error al registrar usuario');
         }
 
-        setIsAuthenticated(true);
-        navigate('/');
       } else {
-        setError('Usuario o contraseña incorrectos');
+        setError('El nombre de usuario ya está en uso');
       }
+      
     } catch (err) {
-      setError('Error al conectar con el servidor');
+      console.error(err);
+      setError('Error de red al registrar usuario');
     }
   };
-
   return (
     <div style={styles.container}>
-      <h2>Iniciar Sesión</h2>
-      <form onSubmit={handleLogin} style={styles.form}>
+      <h2>Registrarse</h2>
+      <form onSubmit={handleSignup} style={styles.form}>
         <input
           type="text"
           placeholder="Usuario"
@@ -59,8 +63,7 @@ export default function Login({ setIsAuthenticated }) {
         />
         {error && <p style={styles.error}>{error}</p>}
         <button type="submit" style={styles.button}>
-          <FaSignInAlt style={{ marginRight: '8px' }} />
-          Entrar
+          Crear Cuenta
         </button>
       </form>
     </div>
@@ -91,13 +94,10 @@ const styles = {
     padding: '10px',
     fontSize: '16px',
     borderRadius: '6px',
-    backgroundColor: '#4CAF50',
+    backgroundColor: '#007bff',
     color: 'white',
     border: 'none',
     cursor: 'pointer',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   error: {
     color: 'red',
